@@ -2,9 +2,17 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowDownRight } from "lucide-react";
+import { useState } from "react";
+import { heroShowreel } from "@/data/video";
+import { getVideoPlayback } from "@/lib/video";
+import { getCopy } from "@/i18n/translations";
+import type { Locale } from "@/i18n/routing";
 
-export default function Hero() {
+export default function Hero({ locale }: { locale: Locale }) {
+  const t = getCopy(locale);
   const reduceMotion = useReducedMotion();
+  const [videoFailed, setVideoFailed] = useState(false);
+  const showreel = getVideoPlayback(heroShowreel?.video);
 
   const reveal = reduceMotion
     ? { initial: false as const, animate: { opacity: 1, y: 0 } }
@@ -16,6 +24,21 @@ export default function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero__image" aria-hidden="true" />
+      {!reduceMotion && !videoFailed && showreel?.provider === "mp4" && heroShowreel?.poster && (
+        <video
+          className="hero__video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={heroShowreel.poster}
+          aria-hidden="true"
+          onError={() => setVideoFailed(true)}
+        >
+          <source src={showreel.src} type="video/mp4" />
+        </video>
+      )}
       <div className="hero__overlay" aria-hidden="true" />
 
       <div className="hero__content page-gutter">
@@ -27,7 +50,7 @@ export default function Hero() {
             delay: reduceMotion ? 0 : 0.15,
           }}
         >
-          WEDDING PHOTOGRAPHY &amp; CINEMATIC FILMS
+          {t.heroEyebrow}
         </motion.p>
 
         <motion.h1
@@ -38,11 +61,7 @@ export default function Hero() {
             delay: reduceMotion ? 0 : 0.3,
           }}
         >
-          For the days
-          <br />
-          you&apos;ll <em>feel</em>
-          <br />
-          forever.
+          {t.heroTitle}
         </motion.h1>
 
         <motion.div
@@ -54,13 +73,11 @@ export default function Hero() {
           }}
         >
           <p className="hero__description">
-            Honest moments. Meaningful stories.
-            <br />
-            Made to be felt, long after they happen.
+            {t.heroDescription}
           </p>
 
           <a href="#stories" className="hero__cta">
-            <span>EXPLORE THE STORIES</span>
+            <span>{t.exploreFilms}</span>
             <span className="hero__cta-icon">
               <ArrowDownRight size={19} strokeWidth={1.5} aria-hidden="true" />
             </span>
@@ -69,8 +86,8 @@ export default function Hero() {
       </div>
 
       <div className="hero__footer page-gutter">
-        <span>BASED IN INDONESIA</span>
-        <span className="hero__footer-center">AVAILABLE WORLDWIDE</span>
+        <span>{t.based}</span>
+        <span className="hero__footer-center">{t.worldwide}</span>
         <a href="#stories" className="hero__scroll">
           SCROLL TO DISCOVER <span aria-hidden="true">↓</span>
         </a>

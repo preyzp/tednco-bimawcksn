@@ -1,11 +1,23 @@
+﻿export type ProjectVideo =
+  | { provider: "youtube"; id: string; title: string; duration?: string }
+  | { provider: "vimeo"; id: string; title: string; duration?: string }
+  | { provider: "mp4"; src: string; title: string; duration?: string };
+
 export type PortfolioProject = {
   slug: string;
   title: string;
   category: "Photography" | "Film" | "Photography & Film";
+  location?: string;
+  year?: number;
+  featured?: boolean;
   coverImage: string;
   coverImageAlt: string;
   mood: string;
   description: string;
+  filmTitle?: string;
+  filmDescription?: string;
+  filmPoster?: string;
+  video?: ProjectVideo;
   gallery: { src: string; alt: string }[];
 };
 
@@ -51,3 +63,4 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
   },
 ];
+
