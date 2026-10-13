@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isValidEmail } from "@/lib/email";
 
 const services = ["Wedding Photography", "Wedding Film", "Photography & Film"] as const;
 const MAX_BODY_BYTES = 16_000;
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
     return errorResponse("Please complete the required fields and check their length.", 400);
   }
   if (!fullName || !email || !service || !message) return errorResponse("Please complete the required fields.", 400);
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return errorResponse("Please enter a valid email address.", 400);
+  if (!isValidEmail(email)) return errorResponse("Please enter a valid email address.", 400);
   if (!services.includes(service as (typeof services)[number])) return errorResponse("Please select a valid service.", 400);
   if (!validDate(weddingDate)) return errorResponse("Please enter a valid wedding date.", 400);
 
