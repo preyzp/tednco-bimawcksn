@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import InquiryForm from "@/components/contact/inquiry-form";
 import { siteConfig } from "@/data/site";
 import { isLocale, type Locale } from "@/i18n/routing";
@@ -37,6 +38,12 @@ export default async function ContactPage({ params }: Props) {
               <a href={whatsappUrl} target="_blank" rel="noreferrer">{t.whatsapp} </a>
             </div>
           ) : null}
+          <div className="instagram-contact">
+            <span className="eyebrow">{t.instagramFind}</span>
+            <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+              <InstagramIcon size={17} strokeWidth={1.7} />@{siteConfig.instagramHandle}
+            </a>
+          </div>
         </div>
       </section>
       <section className="inquiry-panel" aria-label={t.formLabel}>

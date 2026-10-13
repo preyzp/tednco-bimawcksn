@@ -3,8 +3,10 @@
 import { useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/data/site";
 import { localePath, localizedPathFromPathname, type Locale } from "@/i18n/routing";
 import { getCopy } from "@/i18n/translations";
 
@@ -58,6 +60,7 @@ export default function SiteHeader({ variant = "hero", locale }: { variant?: "he
         </Link>
         <div className="site-controls" aria-label={t.language}>
           {(["en", "id"] as const).map((option) => <Link key={option} href={localizedPathFromPathname(option, pathname)} lang={option} aria-current={locale === option ? "page" : undefined} className={`locale-link${locale === option ? " is-active" : ""}`}>{option.toUpperCase()}</Link>)}
+          <a className="instagram-header-link" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label={t.instagramAccessible} title={t.instagramAccessible}><InstagramIcon size={18} strokeWidth={1.6} /></a>
           <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={theme === "dark" ? t.themeLight : t.themeDark} title={theme === "dark" ? t.themeLight : t.themeDark}>{theme === "dark" ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}</button>
         </div>
       </nav>
@@ -96,6 +99,11 @@ export default function SiteHeader({ variant = "hero", locale }: { variant?: "he
                 <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
               </Link>
             ))}
+            <a className="mobile-nav__instagram" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+              <InstagramIcon size={18} strokeWidth={1.6} />
+              {t.instagramNav}
+              <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
+            </a>
           </motion.nav>
         )}
       </AnimatePresence>

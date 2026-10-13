@@ -1,7 +1,9 @@
 ﻿import Image from "@/components/ui/safe-image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight, Play } from "lucide-react";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { portfolioProjects } from "@/data/portfolio";
+import { siteConfig } from "@/data/site";
 import { getVideoPlayback } from "@/lib/video";
 import FilmPlayer from "@/components/portfolio/film-player";
 import { ProjectCategoryLabel } from "@/components/portfolio/project-category-label";
@@ -73,6 +75,6 @@ export function HomeSections({ locale }: { locale: Locale }) {
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   const t = getCopy(locale);
-  return <footer className="site-footer page-gutter"><Link href={localePath(locale)} className="site-footer__brand"><span>BIMA WICKSN</span><small>{t.profession}</small></Link><nav aria-label={t.footerNav}><Link href={localePath(locale, "/#stories")}>{t.films}</Link><Link href={localePath(locale, "/about")}>{t.navigation[1]}</Link><Link href={localePath(locale, "/contact")}>{t.navigation[2]}</Link><a href="#top">{t.backTop}</a></nav><p>&copy; {new Date().getFullYear()} Bima Wicksn</p></footer>;
+  return <footer className="site-footer page-gutter"><Link href={localePath(locale)} className="site-footer__brand"><span>BIMA WICKSN</span><small>{t.profession}</small></Link><nav aria-label={t.footerNav}><Link href={localePath(locale, "/#stories")}>{t.films}</Link><Link href={localePath(locale, "/about")}>{t.navigation[1]}</Link><Link href={localePath(locale, "/contact")}>{t.navigation[2]}</Link><a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" className="site-footer__instagram"><InstagramIcon size={15} />@{siteConfig.instagramHandle}</a></nav><a href="#top" className="site-footer__back-top">{t.backTop}</a><p>&copy; 2026 TEDNCO</p></footer>;
 }
 
